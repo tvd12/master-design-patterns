@@ -1,3 +1,5 @@
+observer link:
+	-:http://www.oodesign.com/observer-pattern.html
 prototype link: 
 	-: http://www.oodesign.com/prototype-pattern.html
 	-: http://www.tutorialspoint.com/design_pattern/prototype_pattern.htm
