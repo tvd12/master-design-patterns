@@ -14,8 +14,7 @@ public class SumCalculator {
 	}
 	
 	public static void sumAsync(int a, int b, Consumer<Integer> callback) {
-		int sum = a + b;
-		Thread newThread = new Thread(() -> callback.accept(sum));
+		Thread newThread = new Thread(() -> callback.accept(a + b));
 		newThread.start();
 	}
 	
