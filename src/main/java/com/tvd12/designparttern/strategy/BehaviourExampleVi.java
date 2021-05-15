@@ -1,6 +1,6 @@
 package com.tvd12.designparttern.strategy;
 
-public class BehaviourExample {
+public class BehaviourExampleVi {
 	public static void main(String[] args) {
 
 		Robot r1 = new Robot("Big Robot");
@@ -15,10 +15,10 @@ public class BehaviourExample {
 		r2.move();
 		r3.move();
 
-		System.out.println("\r\nNew behaviours: " + 
-				"\r\n\t'Big Robot' gets really scared" + 
-				"\r\n\t, 'George v.2.1' becomes really mad because" + "it's always attacked by other robots" + 
-				"\r\n\t and R2 keeps its calm\r\n");
+		System.out.println("\r\nCác hành động tiếp theo: " + 
+				"\r\n\t'Big Robot' đã cảm thấy sợ hãi vì nó yếu hơn và không đủ sức tấn công nữa" + 
+				"\r\n\t'George v.2.1' cảm thấy phát điên sau khi nạp đủ năng lượng" + 
+				"\r\n\tvà 'R2' ở một vị trí rất xa nên không vấn đề gì\r\n");
 
 		r1.setBehaviour(new DefensiveBehaviour());
 		r2.setBehaviour(new AgressiveBehaviour());
@@ -36,7 +36,7 @@ public class BehaviourExample {
 
 		@Override
 		public void moveCommand() {
-			System.out.println("\tAgressive Behaviour: if find another robot attack it");
+			System.out.println("\tTấn công: nếu tìm thấy bất cứ mục tiêu nào");
 		}
 
 	}
@@ -45,7 +45,7 @@ public class BehaviourExample {
 
 		@Override
 		public void moveCommand() {
-			System.out.println("\tDefensive Behaviour: if find another robot run from it");
+			System.out.println("\tPhòng thủ: Nếu có bất kì mối nguy hiểm nào");
 		}
 	}
 
@@ -53,7 +53,7 @@ public class BehaviourExample {
 
 		@Override
 		public void moveCommand() {
-			System.out.println("\tNormal Behaviour: if find another robot ignore it");
+			System.out.println("\tTiếp tục di chuyển: nếu không có bất kì mối nguy hiểm nào");
 		}
 	}
 
@@ -71,17 +71,13 @@ public class BehaviourExample {
 
 		public void move() {
 			System.out.println(
-					this.name + ": Based on current position" + 
-					" the behaviour object decide the next move:"
+					this.name + ": Dựa trên hoàn cảnh hiện tại," + 
+					" chiến thuật tiếp theo sẽ là:"
 			);
 			
 			behaviour.moveCommand();
 			
-			System.out.println(
-					"\tThe result returned by behaviour object " + 
-					"is sent to the movement mechanisms " + 
-					" for the robot '" + this.name + "'"
-			);
+			System.out.println("\tDành cho robot: '" + this.name + "'");
 		}
 	}
 }
