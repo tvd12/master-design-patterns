@@ -1,164 +1,147 @@
 package com.tvd12.designparttern.bridge;
 
-import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataBridgeExample {
 
 	public static void main(String[] args) {
-		// this program needs a persistence framework
-		// at runtime an implementor is chosen between file system
-		// implementation and
-		// database implememtor , depending on existence of databse drivers
-		PersistenceImplementor implementor = null;
-		if(databaseDriverExists()) {
-			implementor = new DatabasePersistenceImplementor();
-		}
-		else {
-			implementor = new FileSystemPersistenceImplementor();
-		}
+		String databaseType = args.length > 0 ? args[0] : "MySQL";
 		
-		Persistence persistenceAPI = new PersistenceImp(implementor);
+		// create persistence API
+		Persistence persistenceAPI = new PersistenceImp(databaseType);
 		
-		Object object = persistenceAPI.findById("30051992");
+		// save an entity
+		persistenceAPI.persist(new UserEntity("foo", "Mr.Foo"));
 		
-		//do something with object
-		persistenceAPI.persist(object);
+		// get an entity
+		UserEntity user = (UserEntity) persistenceAPI.findById("foo");
+		System.out.println("findById(foo): " + user);
 		
-		persistenceAPI = new PersistenceImp(new DatabasePersistenceImplementor());
-		
+		// delete an entity
 		persistenceAPI.deleteById("123456");
 	}
 	
-	private static boolean databaseDriverExists() {
-		
-		return false;
-	}
+}
 
+class UserEntity implements Entity {
+	
+	private String id;
+	private String fullName;
+	
+	public UserEntity(String id, String fullName) {
+		this.id = id;
+		this.fullName = fullName;
+	}
+	
+	@Override
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	@Override
+	public String getId() {
+		return id;
+	}
+	
+	public String getFullName() {
+		return fullName;
+	}
+	
+	@Override
+	public String toString() {
+		return "User(" + id + ", " + fullName + ")";
+	}
+}
+
+interface Entity {
+	String getId();
+
+	void setId(String id);
 }
 
 interface Persistence {
+	
+	public void persist(Entity entity);
 
-	public String persist(Object object);
-
-	public Object findById(String objectId);
+	public Entity findById(String id);
 
 	public void deleteById(String id);
-
 }
 
+// bridge interface
 interface PersistenceImplementor {
 
-	public long saveObject(Object object);
+	public void saveEntity(Entity entity);
 
-	public void deleteObject(long objectId);
+	public void deleteEntity(String entityId);
 
-	public Object getObject(long objectId);
-
+	public Entity getEntity(String entityId);
 }
 
 class PersistenceImp implements Persistence {
-
-	public PersistenceImp(PersistenceImplementor imp) {
-		this.mImplementor = imp;
-	}
-
-	public static PersistenceImp create(PersistenceImplementor imp) {
-		PersistenceImp pRet = new PersistenceImp(imp);
-
-		return pRet;
-	}
-
-	@Override
-	public String persist(Object object) {
-		return Long.toString(mImplementor.saveObject(object));
+	
+	// bridge object
+	private PersistenceImplementor implementor;
+	
+	public PersistenceImp(String databaseType) {
+		this.implementor = databaseType.equals("MySQL")
+				? new MySQLPersistenceImplementor()
+				: new OraclePersistenceImplementor();
 	}
 
 	@Override
-	public Object findById(String objectId) {
-		return mImplementor.getObject(Long.parseLong(objectId));
+	public void persist(Entity entity) {
+		implementor.saveEntity(entity);
+	}
+
+	@Override
+	public Entity findById(String id) {
+		return implementor.getEntity(id);
 	}
 
 	@Override
 	public void deleteById(String id) {
-		mImplementor.deleteObject(Long.parseLong(id));
+		implementor.deleteEntity(id);
 	}
 
-	private PersistenceImplementor mImplementor;
 }
 
-class FileSystemPersistenceImplementor implements PersistenceImplementor {
+class MySQLPersistenceImplementor implements PersistenceImplementor {
 
+	private final Map<String, Entity> entities = new HashMap<>();
+	
 	@Override
-	public long saveObject(Object object) {
-
-		long fileId = System.currentTimeMillis();
-
-		// open file
-		File file = getFile(fileId);
-
-		writeObjectToFile(file, object);
-
-		return fileId;
+	public void saveEntity(Entity entity) {
+		entities.put(entity.getId(), entity);
 	}
 
 	@Override
-	public void deleteObject(long objectId) {
-		File file = getFile(objectId);
-
-		file.delete();
+	public void deleteEntity(String entityId) {
+		entities.remove(entityId);
 	}
 
 	@Override
-	public Object getObject(long objectId) {
-		File file = getFile(objectId);
-
-		return readObjectFromFile(file);
+	public Entity getEntity(String entityId) {
+		return entities.get(entityId);
 	}
-
-	public Object readObjectFromFile(File file) {
-		System.out.println("read from file: " + file.getPath());
-
-		return null;
-	}
-
-	public void writeObjectToFile(File file, Object object) {
-		System.out.println("write object " + object.toString() + " to file " + file.getPath());
-	}
-
-	private File getFile(long id) {
-		File file = new File(File.separator + PERSISTENCE_FOLDER + File.separator + Long.toString(id));
-
-		return file;
-	}
-
-	private static final String PERSISTENCE_FOLDER = "persistence";
 }
 
-class DatabasePersistenceImplementor implements PersistenceImplementor {
-
-	public static DatabasePersistenceImplementor create() {
-		DatabasePersistenceImplementor pRet = new DatabasePersistenceImplementor();
-
-		return pRet;
+class OraclePersistenceImplementor implements PersistenceImplementor {
+	private final Map<String, Entity> entities = new HashMap<>();
+	
+	@Override
+	public void saveEntity(Entity entity) {
+		entities.put(entity.getId(), entity);
 	}
 
 	@Override
-	public long saveObject(Object object) {
-		System.out.println("saveObject: " + object);
-
-		return 0;
+	public void deleteEntity(String entityId) {
+		entities.remove(entityId);
 	}
 
 	@Override
-	public void deleteObject(long objectId) {
-		System.out.println("deleteObject: " + objectId);
+	public Entity getEntity(String entityId) {
+		return entities.get(entityId);
 	}
-
-	@Override
-	public Object getObject(long objectId) {
-		System.out.println("getObject: " + objectId);
-
-		return null;
-	}
-
 }
