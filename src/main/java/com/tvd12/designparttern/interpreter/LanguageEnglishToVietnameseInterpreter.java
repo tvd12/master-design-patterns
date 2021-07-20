@@ -3,6 +3,7 @@ package com.tvd12.designparttern.interpreter;
 import java.util.HashMap;
 import java.util.Map;
 
+// TermialExpression
 public class LanguageEnglishToVietnameseInterpreter implements LanguageInterperter {
 
 	private Map<String, String> dictionary = new HashMap<>();

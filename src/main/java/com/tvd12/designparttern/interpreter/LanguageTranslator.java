@@ -3,7 +3,7 @@ package com.tvd12.designparttern.interpreter;
 import java.util.HashMap;
 import java.util.Map;
 
-// client
+// Client
 public class LanguageTranslator {
 	
 	private final Map<LanguageType, Map<LanguageType, LanguageInterperter>> interperters;

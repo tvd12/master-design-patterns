@@ -3,9 +3,9 @@ package com.tvd12.designparttern.interpreter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+//Context
 @Getter
 @AllArgsConstructor
-// Context
 public class LanguageTranslateRequest {
 
 	private final LanguageType inputLanguageType;
