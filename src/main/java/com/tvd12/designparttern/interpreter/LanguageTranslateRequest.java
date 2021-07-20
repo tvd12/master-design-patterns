@@ -11,5 +11,4 @@ public class LanguageTranslateRequest {
 	private final LanguageType inputLanguageType;
 	private final LanguageType outputlLanguageType;
 	private final String text;
-	
 }
