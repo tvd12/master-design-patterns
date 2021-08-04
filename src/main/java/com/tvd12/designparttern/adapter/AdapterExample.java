@@ -27,7 +27,7 @@ interface VideoMediaPlayer {
 
 class MediaAdapter implements MediaPlayer {
 
-	private VideoMediaPlayer vlcMediaPlayer = new VLCPVideolayer();
+	private VideoMediaPlayer vlcMediaPlayer = new VLCPVideoPlayer();
 	private VideoMediaPlayer mp4MediaPlayer = new MP4VideoPlayer();
 	
 
@@ -57,7 +57,7 @@ class AudioPlayer implements MediaPlayer {
 	}
 }
 
-class VLCPVideolayer implements VideoMediaPlayer {
+class VLCPVideoPlayer implements VideoMediaPlayer {
 
 	@Override
 	public void playVideo(String fileName) {
