@@ -2,109 +2,73 @@ package com.tvd12.designparttern.adapter;
 
 public class AdapterExample {
 	public static void main(String[] args) {
-		AudioPlayer audioPlayer = new AudioPlayer();
+		MediaPlayer audioPlayer = new AudioPlayer();
 		
-		audioPlayer.play(AudioPlayer.TYPE_MP3, "bong_hoa_nho.mp3");
-		audioPlayer.play(AdvancedMediaPlayer.TYPE_MP4, "bong_hoa_vua.mp4");
-		audioPlayer.play(AdvancedMediaPlayer.TYPE_VLC, "bong_hoa_to.vlc");
-		audioPlayer.play("wav", "bong_hoa_tihon.wav");
+		audioPlayer.play(MediaType.MP3, "bong_hoa_nho.mp3");
+		audioPlayer.play(MediaType.MP4, "bong_hoa_vua.mp4");
+		audioPlayer.play(MediaType.VLC, "bong_hoa_to.vlc");
 	}
 }
 
-interface MediaPlayer {
-	public void play(String audioType, String fileName);
+enum MediaType {
+	MP3,
+	MP4,
+	VLC
 }
 
-interface AdvancedMediaPlayer {
-	public void playVLC(String fileName);
+interface MediaPlayer {
+	public void play(MediaType mediaType, String fileName);
+}
 
-	public void playMP4(String fileName);
+interface VideoMediaPlayer {
 	
-	public static final String TYPE_VLC	= "VLC";
-	public static final String TYPE_MP4 = "MP4";
+	public void playVideo(String fileName);
 }
 
 class MediaAdapter implements MediaPlayer {
 
-	public MediaAdapter(String audioType) {
-		if (audioType.equalsIgnoreCase(
-				AdvancedMediaPlayer.TYPE_VLC)) {
-			mAdvancedMusicPlayer = new VLCPlayer();
-
-		} 
-		else if (audioType.equalsIgnoreCase(
-				AdvancedMediaPlayer.TYPE_MP4)) {
-			mAdvancedMusicPlayer = new MP4Player();
-		}
-	}
+	private VideoMediaPlayer vlcMediaPlayer = new VLCPVideolayer();
+	private VideoMediaPlayer mp4MediaPlayer = new MP4VideoPlayer();
+	
 
 	@Override
-	public void play(String audioType, String fileName) {
-		if (audioType.equalsIgnoreCase(
-				AdvancedMediaPlayer.TYPE_VLC)) {
-			mAdvancedMusicPlayer.playVLC(fileName);
+	public void play(MediaType mediaType, String fileName) {
+		if (mediaType == MediaType.VLC) {
+			vlcMediaPlayer.playVideo(fileName);
 		} 
-		else if (audioType.equalsIgnoreCase(
-				AdvancedMediaPlayer.TYPE_MP4)) {
-			mAdvancedMusicPlayer.playMP4(fileName);
+		else {
+			mp4MediaPlayer.playVideo(fileName);
 		}
 	}
-
-	private AdvancedMediaPlayer mAdvancedMusicPlayer;
 }
 
 class AudioPlayer implements MediaPlayer {
 
+	private final MediaAdapter mediaAdapter = new MediaAdapter();
+	
 	@Override
-	public void play(String audioType, String fileName) {
-		// inbuilt support to play mp3 music files
-		if (audioType.equalsIgnoreCase(
-				AudioPlayer.TYPE_MP3)) {
+	public void play(MediaType mediaType, String fileName) {
+		if (mediaType == MediaType.MP3) {
 			System.out.println("Playing MP3 file. Name: " + fileName);
 		}
-
-		// mediaAdapter is providing support to play other file formats
-		else if (audioType.equalsIgnoreCase(
-				AdvancedMediaPlayer.TYPE_VLC) 
-				|| audioType.equalsIgnoreCase(
-						AdvancedMediaPlayer.TYPE_MP4)) {
-			mMediaPlayer = new MediaAdapter(audioType);
-			mMediaPlayer.play(audioType, fileName);
-		}
-
 		else {
-			System.out.println("Invalid media. " + audioType + " format not supported");
+			mediaAdapter.play(mediaType, fileName);
 		}
 	}
-
-	private MediaPlayer mMediaPlayer;
-	
-	public static final String TYPE_MP3 = "MP3";
-
 }
 
-class VLCPlayer implements AdvancedMediaPlayer {
+class VLCPVideolayer implements VideoMediaPlayer {
 
 	@Override
-	public void playVLC(String fileName) {
+	public void playVideo(String fileName) {
 		System.out.println("Playing VLC file. Name: " + fileName);
 	}
-
-	@Override
-	public void playMP4(String fileName) {
-
-	}
 }
 
-class MP4Player implements AdvancedMediaPlayer {
+class MP4VideoPlayer implements VideoMediaPlayer {
 
 	@Override
-	public void playVLC(String fileName) {
-
-	}
-
-	@Override
-	public void playMP4(String fileName) {
+	public void playVideo(String fileName) {
 		System.out.println("Playing MP4 file. Name: " + fileName);
 	}
 }
