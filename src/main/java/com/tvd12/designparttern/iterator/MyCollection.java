@@ -41,5 +41,4 @@ public class MyCollection<T> implements Iterable<T> {
 			return (T)items[index ++];
 		}
 	}
-
 }
