@@ -154,7 +154,7 @@ public class Graph<K, V> {
 		}
 	}
 	
-	public static class PrintVistor<K, V> implements Visitor<Vertex<K, V>> {
+	public static class PrintVisitor<K, V> implements Visitor<Vertex<K, V>> {
 		@Override
 		public void visit(Vertex<K, V> element) {
 			System.out.print(element + " => ");
@@ -162,7 +162,7 @@ public class Graph<K, V> {
 	}
 	
 	@Getter
-	public static class CacheVistor<K, V> implements Visitor<Vertex<K, V>> {
+	public static class CacheVisitor<K, V> implements Visitor<Vertex<K, V>> {
 		
 		private final List<Vertex<K, V>> buffer = new LinkedList<>();
 		
@@ -188,13 +188,13 @@ public class Graph<K, V> {
 	    graph.addEdge("Rob", "Maria");
 	    System.out.println(graph);
 	    
-	    Visitor<Vertex<String, Integer>> printVistor = new PrintVistor<>();
-	    graph.breadthFirstTraversal(printVistor);
+	    Visitor<Vertex<String, Integer>> printVisitor = new PrintVisitor<>();
+	    graph.breadthFirstTraversal(printVisitor);
 	    System.out.println();
 	    
-	    Visitor<Vertex<String, Integer>> cacheVistor = new CacheVistor<>();
-	    graph.depthFirstTraversal(cacheVistor);
-	    System.out.println(((CacheVistor)cacheVistor).getBuffer());
+	    Visitor<Vertex<String, Integer>> cacheVisitor = new CacheVisitor<>();
+	    graph.depthFirstTraversal(cacheVisitor);
+	    System.out.println(((CacheVisitor)cacheVisitor).getBuffer());
 	}
 	
 }
