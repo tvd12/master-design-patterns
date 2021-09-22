@@ -3,15 +3,15 @@ package com.tvd12.designparttern.nullobject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.ToString;
 
 public class UserFetcher {
 
 	private final Map<Long, User> userById;
-	private static final User DEFAULT_USER = new User(0, "");
 	
 	public UserFetcher() {
 		this.userById = new HashMap<>();
@@ -23,24 +23,48 @@ public class UserFetcher {
 		return Optional.ofNullable(userById.get(userId));
 	}
 	
-	@Getter
-	@ToString
-	@AllArgsConstructor
-	public static class User {
-		private long id;
-		private String name;
+	public static class ToJsonOperation implements Function<User, String> {
+		@Override
+		public String apply(User t) {
+			return t.toJson();
+		}
+	}
+	
+	public static class ToEmptyStringOperation implements Supplier<String> {
+		@Override
+		public String get() {
+			return "";
+		}
 	}
 	
 	public static void main(String[] args) {
 		UserFetcher userFetcher = new UserFetcher();
-		User user1st = userFetcher
+		String user1stJson = userFetcher
 				.getUserById(1L)
-				.orElseGet(() -> DEFAULT_USER);
-		System.out.println(user1st);
+				.map(new ToJsonOperation())
+				.orElseGet(new ToEmptyStringOperation());
+		System.out.println(user1stJson);
 		
-		User user3rd = userFetcher
+		String user3rdJson = userFetcher
 				.getUserById(3L)
+				.map(new ToJsonOperation())
 				.get();
-		System.out.println(user3rd);
+		System.out.println(user3rdJson);
+	}
+	
+	@Getter
+	@AllArgsConstructor
+	public static class User {
+		private long id;
+		private String name;
+		
+		public String toJson() {
+			return "{\"id: \"" + id + ", \"name\": \"" + name + "\"}";
+		}
+		
+		@Override
+		public String toString() {
+			return toJson();
+		}
 	}
 }
