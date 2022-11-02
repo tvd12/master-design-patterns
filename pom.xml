@@ -31,5 +31,6 @@
 		<module>chapter-006-prototype</module>
 		<module>chapter-007-object-pool</module>
 		<module>chapter-008-chain-of-responsibility</module>
+		<module>chapter-009-command</module>
 	</modules>
 </project>
