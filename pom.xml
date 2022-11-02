@@ -34,5 +34,6 @@
 		<module>chapter-009-command</module>
         <module>chapter-010-interpreter</module>
 		<module>chapter-011-iterator</module>
+		<module>chapter-012-iterator-clean</module>
 	</modules>
 </project>
