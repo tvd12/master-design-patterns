@@ -29,5 +29,6 @@
 		<module>chapter-004-abstract-factory</module>
 		<module>chapter-005-builder</module>
 		<module>chapter-006-prototype</module>
+		<module>chapter-007-object-pool</module>
 	</modules>
 </project>
