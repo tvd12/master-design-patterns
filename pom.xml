@@ -18,9 +18,14 @@
 
 	<properties>
 		<ezyhttp.version>1.0.8</ezyhttp.version>
+		<mysql.connector.version>8.0.28</mysql.connector.version>
 	</properties>
 
 	<modules>
 		<module>examples</module>
+		<module>chapter-001-singleton</module>
+		<module>chapter-002-factory</module>
+		<module>chapter-003-factory-method</module>
+		<module>chapter-004-abstract-factory</module>
 	</modules>
 </project>
