@@ -33,5 +33,6 @@
 		<module>chapter-008-chain-of-responsibility</module>
 		<module>chapter-009-command</module>
         <module>chapter-010-interpreter</module>
-    </modules>
+		<module>chapter-011-iterator</module>
+	</modules>
 </project>
