@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>chapter-012-iterator-clean</artifactId>
+    <artifactId>chapter-011-iterator-clean</artifactId>
 
     <dependencies>
         <dependency>
