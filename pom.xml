@@ -38,5 +38,6 @@
 		<module>chapter-012-mediator-stackoverflow</module>
 		<module>chapter-012-mediator</module>
 		<module>chapter-013-memento</module>
+		<module>chapter-014-observer</module>
 	</modules>
 </project>
