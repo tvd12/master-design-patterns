@@ -43,5 +43,6 @@
         <module>chapter-016-template-method</module>
 		<module>chapter-017-visitor</module>
 		<module>chapter-018-null-object</module>
+		<module>chapter-019-adapter</module>
 	</modules>
 </project>
