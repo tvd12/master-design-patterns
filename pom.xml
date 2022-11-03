@@ -44,5 +44,6 @@
 		<module>chapter-017-visitor</module>
 		<module>chapter-018-null-object</module>
 		<module>chapter-019-adapter</module>
+		<module>chapter-020-bridge</module>
 	</modules>
 </project>
