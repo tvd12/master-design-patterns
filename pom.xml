@@ -37,5 +37,6 @@
 		<module>chapter-011-iterator-clean</module>
 		<module>chapter-012-mediator-stackoverflow</module>
 		<module>chapter-012-mediator</module>
+		<module>chapter-013-memento</module>
 	</modules>
 </project>
