@@ -32,7 +32,7 @@ public class ApiBookController {
     private final EntityFactory entityFactory =
         bookApplication.getEntityFactory();
 
-    private final BookRepository authorRepository =
+    private final BookRepository bookRepository =
         bookApplication
             .getDatabaseContext()
             .newRepository(Book.class);
@@ -68,7 +68,7 @@ public class ApiBookController {
                 }
             })
             .addFirstHandle(() -> {
-                final Book author = entityFactory
+                final Book book = entityFactory
                     .newEntityBuilder(
                         BookBuilder.class
                     )
@@ -76,8 +76,8 @@ public class ApiBookController {
                     .authorId(request.getAuthorId())
                     .categoryId(request.getCategoryId())
                     .build();
-                authorRepository.save(author);
-                return new AddBookResponse(author.getId());
+                bookRepository.save(book);
+                return new AddBookResponse(book.getId());
             })
             .handle();
     }
