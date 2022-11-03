@@ -36,5 +36,6 @@
 		<module>chapter-011-iterator</module>
 		<module>chapter-011-iterator-clean</module>
 		<module>chapter-012-mediator-stackoverflow</module>
+		<module>chapter-012-mediator</module>
 	</modules>
 </project>
