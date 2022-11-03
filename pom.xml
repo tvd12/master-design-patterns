@@ -41,5 +41,6 @@
 		<module>chapter-014-observer</module>
 		<module>chapter-015-strategy</module>
         <module>chapter-016-template-method</module>
-    </modules>
+		<module>chapter-017-visitor</module>
+	</modules>
 </project>
