@@ -40,5 +40,6 @@
 		<module>chapter-013-memento</module>
 		<module>chapter-014-observer</module>
 		<module>chapter-015-strategy</module>
-	</modules>
+        <module>chapter-016-template-method</module>
+    </modules>
 </project>
