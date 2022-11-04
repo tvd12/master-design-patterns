@@ -11,9 +11,17 @@
 
     <artifactId>chapter-024-proxy</artifactId>
 
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tvd12</groupId>
+            <artifactId>ezyhttp-server-boot</artifactId>
+            <version>${ezyhttp.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
