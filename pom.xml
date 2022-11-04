@@ -46,5 +46,6 @@
 		<module>chapter-019-adapter</module>
 		<module>chapter-020-bridge</module>
         <module>chapter-021-composite</module>
-    </modules>
+		<module>chapter-022-decorator</module>
+	</modules>
 </project>
