@@ -45,5 +45,6 @@
 		<module>chapter-018-null-object</module>
 		<module>chapter-019-adapter</module>
 		<module>chapter-020-bridge</module>
-	</modules>
+        <module>chapter-021-composite</module>
+    </modules>
 </project>
