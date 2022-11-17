@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/page}">
+
+<body>
+<div layout:fragment="content" class="container">
+    <h3>Add New Category</h3>
+    <form class="form-horizontal" id="addCategoryForm">
+        <div class="form-group row">
+            <label for="categoryName" class="col-md-3 col-form-label">
+                Category Name (<span class="text-danger">*</span>)
+            </label>
+            <div class="col-md-9">
+                <label class="col-form-label text-danger d-none" id="categoryNameErrorLabel" for="categoryName">
+                    <i class="far fa-times-circle"></i> <span id="categoryNameError"></span>
+                </label>
+                <input type="text" name="categoryName" id="categoryName" class="form-control" placeholder="Category name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <button type="button" id="submitButton" class="btn btn-solid btn-primary btn-block" onclick="createCategory();">
+                    Submit
+                </button>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+    </form>
+    <hr class="mb-4">
+    <h3>Category List</h3>
+    <ol>
+        <li th:each="category : ${categories}">
+            <span>[[${category.name}]]</span>
+        </li>
+    </ol>
+</div>
+<script layout:fragment="scripts">
+var createCategory = function() {
+    var formData = formDataToObject('addCategoryForm');
+    $.ajax({
+        type: 'POST',
+        url: '/api/v1/categories/add',
+        data: JSON.stringify(formData),
+        contentType: "application/json",
+        success: function (data) {
+          location.reload();
+        },
+        error: function (data, e) {
+            processUpdateApiErrors(formData, data);
+        }
+    });
+}
+</script>
+</body>
+</html>

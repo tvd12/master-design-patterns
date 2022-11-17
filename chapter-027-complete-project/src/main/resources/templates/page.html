@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <title>Book Market</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+</head>
+
+<body>
+<div>
+    <nav class="main-menu">
+        <a href="/" th:classappend="${page == 'home' ? 'selected' : ''}">
+            Home
+        </a>
+        <a href="/authors" class="pl-3" th:classappend="${page == 'author' ? 'selected' : ''}">
+            Author
+        </a>
+        <a href="/categories" class="pl-3" th:classappend="${page == 'category' ? 'selected' : ''}">
+            Category
+        </a>
+        <a href="/books" class="pl-3" th:classappend="${page == 'book' ? 'selected' : ''}">
+            Add New Book
+        </a>
+    </nav>
+    <div class="banner">
+        <h1>[[${pageTitle}]]</h1>
+    </div>
+</div>
+<div class="mb-3"></div>
+<div layout:fragment="content"></div>
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<!-- Bootstrap -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script layout:fragment="scripts"></script>
+</body>
+
+</html>

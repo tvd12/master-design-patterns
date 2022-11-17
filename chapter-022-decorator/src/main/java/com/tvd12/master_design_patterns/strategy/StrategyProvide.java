@@ -9,7 +9,7 @@ public class StrategyProvide {
 
     public StrategyProvide() {
         strategyByType = new HashMap<>();
-        strategyByType.put(AuthorLevelStrategy.class, new AuthorLevelStrategy());
+        strategyByType.put(AuthorLevelStrategyContext.class, new AuthorLevelStrategyContext());
     }
 
     @SuppressWarnings("unchecked")

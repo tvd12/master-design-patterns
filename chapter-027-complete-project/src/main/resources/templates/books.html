@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/page}">
+
+<body>
+<div layout:fragment="content" class="container">
+    <h3>Add New Book</h3>
+    <form class="form-horizontal" id="addBookForm">
+        <div class="form-group row">
+            <label for="bookName" class="col-md-3 col-form-label">
+                Book Name (<span class="text-danger">*</span>)
+            </label>
+            <div class="col-md-9">
+                <label class="col-form-label text-danger d-none" id="bookNameErrorLabel" for="bookName">
+                    <i class="far fa-times-circle"></i> <span id="bookNameError"></span>
+                </label>
+                <input type="text" name="bookName" id="bookName" class="form-control" placeholder="Book name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="bookAuthor" class="col-md-3 col-form-label">
+                Author (<span class="text-danger">*</span>)
+            </label>
+            <div class="col-md-3">
+                <label class="col-form-label text-danger d-none" id="bookAuthorErrorLabel" for="bookAuthor">
+                    <i class="far fa-times-circle"></i> <span id="bookAuthorError"></span>
+                </label>
+                <select name="authorId" id="bookAuthor" class="form-select custom-select">
+                    <option th:each="author : ${authors}" th:value="${author.id}">[[${author.name}]]</option>
+                </select>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="bookCategory" class="col-md-3 col-form-label">
+                Category (<span class="text-danger">*</span>)
+            </label>
+            <div class="col-md-3">
+                <label class="col-form-label text-danger d-none" id="bookCategoryErrorLabel" for="bookCategory">
+                    <i class="far fa-times-circle"></i> <span id="bookCategoryError"></span>
+                </label>
+                <select name="categoryId" id="bookCategory" class="form-select custom-select">
+                    <option th:each="category : ${categories}" th:value="${category.id}">[[${category.name}]]</option>
+                </select>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+        <div class="form-group row">
+            <label for="bookImage" class="col-md-3 col-form-label">
+                Image (<span class="text-danger">*</span>)
+            </label>
+            <div class="col-md-9">
+                <label class="col-form-label text-danger d-none" id="bookImageErrorLabel" for="bookImage">
+                    <i class="far fa-times-circle"></i> <span id="bookImageError"></span>
+                </label>
+                <input type="file" name="bookImage" id="bookImage" class="form-control" placeholder="Book name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <button type="button" id="submitButton" class="btn btn-solid btn-primary btn-block" onclick="createBook();">
+                    Submit
+                </button>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+    </form>
+    <hr class="mb-4">
+    <h3>Book List</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Category</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book, iterator : ${books}">
+            <td>[[${iterator.index + 1}]]</td>
+            <td>[[${book.name}]]</td>
+            <td>[[${book.author.name}]]</td>
+            <td>[[${book.category.name}]]</td>
+        </tr>
+        </tbody>
+    </table>
+    </ol>
+</div>
+<script layout:fragment="scripts">
+var addBookImage = function(callback) {
+    $.each($('#bookImage')[0].files, function(index, file) {
+        doAddBookImage(file, callback);
+    });
+}
+
+var doAddBookImage = function(file, callback) {
+    var data = new FormData();
+    data.append('file', file);
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "/api/v1/books/images/add",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 60000,
+        success: function (data) {
+          callback(file.name);
+        },
+        error: function (data, e) {
+            // do nothing
+        }
+    });
+}
+
+var createBook = function() {
+  addBookImage(doCreateBook);
+}
+
+var doCreateBook = function(imageName) {
+    var formData = formDataToObject('addBookForm');
+    formData.bookImage = imageName;
+    $.ajax({
+        type: 'POST',
+        url: '/api/v1/books/add',
+        data: JSON.stringify(formData),
+        contentType: "application/json",
+        success: function (data) {
+          location.reload();
+        },
+        error: function (data, e) {
+            processUpdateApiErrors(formData, data);
+        }
+    });
+}
+</script>
+</body>
+</html>

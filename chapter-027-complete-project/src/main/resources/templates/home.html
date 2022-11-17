@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/page}">
+
+<body>
+<div layout:fragment="content" class="container">
+    <div class="row">
+        <div th:each="book : ${books}" class="col-md-4 mt-5 book-item">
+            <img th:src="${'/api/v1/books/images/' + book.imageName}">
+            <span class="text-secondary">[[${book.name}]]</span>
+            <div class="information">
+                <span>Author</span>
+                <span class="text-info">[[${book.author.name}]]</span>
+            </div>
+            <div class="information">
+                <span>Category</span>
+                <span class="text-success">[[${book.category.name}]]</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

@@ -50,5 +50,6 @@
 		<module>chapter-023-flyweight</module>
 		<module>chapter-024-proxy</module>
         <module>chapter-026-clean-project</module>
+        <module>chapter-027-complete-project</module>
     </modules>
 </project>

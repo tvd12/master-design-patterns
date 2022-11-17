@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/page}">
+
+<body>
+<div layout:fragment="content" class="container">
+    <h3>Add New Author</h3>
+    <form class="form-horizontal" id="addAuthorForm">
+        <div class="form-group row">
+            <label for="authorName" class="col-md-3 col-form-label">
+                Author Name (<span class="text-danger">*</span>)
+            </label>
+            <div class="col-md-9">
+                <label class="col-form-label text-danger d-none" id="authorNameErrorLabel" for="authorName">
+                    <i class="far fa-times-circle"></i> <span id="authorNameError"></span>
+                </label>
+                <input type="text" name="authorName" id="authorName" class="form-control" placeholder="Author name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <button type="button" id="submitButton" class="btn btn-solid btn-primary btn-block" onclick="createAuthor();">
+                    Submit
+                </button>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+    </form>
+    <hr class="mb-4">
+    <h3>Author List</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Level</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="author, iterator : ${authors}">
+            <td>[[${iterator.index + 1}]]</td>
+            <td>[[${author.name}]]</td>
+            <td>[[${author.code}]]</td>
+            <td>[[${author.level}]]</td>
+        </tr>
+        </tbody>
+    </table>
+    </ol>
+</div>
+<script layout:fragment="scripts">
+var createAuthor = function() {
+    var formData = formDataToObject('addAuthorForm');
+    $.ajax({
+        type: 'POST',
+        url: '/api/v1/authors/add',
+        data: JSON.stringify(formData),
+        contentType: "application/json",
+        success: function (data) {
+          location.reload();
+        },
+        error: function (data, e) {
+            processUpdateApiErrors(formData, data);
+        }
+    });
+}
+</script>
+</body>
+</html>

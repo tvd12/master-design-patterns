@@ -6,7 +6,7 @@ import com.tvd12.master_design_patterns.entity.Book;
 import com.tvd12.master_design_patterns.pool.ConnectionPool;
 import com.tvd12.master_design_patterns.repository.AuthorRepository;
 import com.tvd12.master_design_patterns.repository.BookRepository;
-import com.tvd12.master_design_patterns.strategy.AuthorLevelStrategy;
+import com.tvd12.master_design_patterns.strategy.AuthorLevelStrategyContext;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,10 +25,10 @@ public class AuthorRepositoryImpl implements AuthorRepository {
             .getRepository(Book.class);
         final long bookCount = bookRepository.countBookByAuthorId(authorId);
 
-        final AuthorLevelStrategy authorLevelStrategy = bookApplication
+        final AuthorLevelStrategyContext authorLevelStrategyContext = bookApplication
             .getStrategyProvide()
-            .getStrategy(AuthorLevelStrategy.class);
-        final String authorLevel = authorLevelStrategy.decideAuthorLevel(bookCount);
+            .getStrategy(AuthorLevelStrategyContext.class);
+        final String authorLevel = authorLevelStrategyContext.decideAuthorLevel(bookCount);
 
         final String query = "UPDATE Author SET level = ? WHERE id = ?";
         final ConnectionPool connectionPool = BookApplication

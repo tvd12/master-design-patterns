@@ -1,0 +1,8 @@
+resources:
+  enable: true
+  upload:
+    enable: true
+
+datasource:
+  jdbcUrl: jdbc:mysql://root:12345678@localhost:3306/book_market
+  driverClassName: com.mysql.cj.jdbc.Driver
