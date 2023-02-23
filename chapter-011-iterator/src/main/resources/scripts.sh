@@ -3,3 +3,5 @@ curl --location --request POST 'http://localhost:8080/api/v1/authors/add' \
 --data-raw '{
     "authorName": "Dzung"
 }'
+
+curl --location --request GET 'http://localhost:8080/api/v1/authors'
