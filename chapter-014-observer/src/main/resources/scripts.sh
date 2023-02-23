@@ -17,3 +17,8 @@ curl --location --request POST 'http://localhost:8080/api/v1/books/add' \
     "authorId": 1,
     "categoryId": 1
 }'
+
+curl --location --request GET 'http://localhost:8080/api/v1/authors'
+
+curl --location --request GET 'http://localhost:8080/api/v1/books'
+
