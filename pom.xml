@@ -53,5 +53,6 @@
         <module>chapter-027-complete-project</module>
 		<module>chapter-ex01-facade</module>
         <module>chapter-ex02-hexagon</module>
-    </modules>
+		<module>chapter-ex03-event-driven</module>
+	</modules>
 </project>

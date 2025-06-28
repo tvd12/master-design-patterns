@@ -10,5 +10,5 @@
     </parent>
 
     <groupId>org.example</groupId>
-    <artifactId>chapter-ex02-hexagon</artifactId>
+    <artifactId>chapter-ex03-event-driven</artifactId>
 </project>
