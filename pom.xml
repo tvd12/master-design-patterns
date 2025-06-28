@@ -52,5 +52,6 @@
         <module>chapter-026-clean-project</module>
         <module>chapter-027-complete-project</module>
 		<module>chapter-ex01-facade</module>
-	</modules>
+        <module>chapter-ex02-hexagon</module>
+    </modules>
 </project>
