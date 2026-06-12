@@ -1,12 +1,10 @@
 package com.tvd12.master_design_patterns.repository;
 
-import com.tvd12.ezyfox.exception.NotFoundException;
 import com.tvd12.ezyfox.reflect.EzyGenerics;
 import com.tvd12.master_design_patterns.BookApplication;
 import com.tvd12.master_design_patterns.command.FindByIdCommand;
 import com.tvd12.master_design_patterns.command.IterableCommand;
 import com.tvd12.master_design_patterns.command.SaveCommand;
-import com.tvd12.master_design_patterns.operation.NullOperation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,22 +43,6 @@ public interface Repository<E> {
     }
 
     default E findById(long entityId) throws Exception {
-        return findById(entityId, () -> null);
-    }
-
-    default E findByIdOrThrowNotFound(long entityId) throws Exception {
-        return findById(
-            entityId,
-            () -> {
-                throw new NotFoundException("there is no entity with id: " + entityId);
-            }
-        );
-    }
-
-    default E findById(
-        long entityId,
-        NullOperation<E> nullOperation
-    ) throws Exception {
         final FindByIdCommand<E> command = BookApplication
             .getInstance()
             .getCommandProvider()
@@ -69,7 +51,13 @@ public interface Repository<E> {
             .entityType(getEntityType())
             .entityId(entityId)
             .execute();
-        return entity != null ? entity : nullOperation.operate();
+        return entity != null ? entity : newNullEntity();
+    }
+
+    default E newNullEntity() {
+        return BookApplication.getInstance()
+            .getEntityFactory()
+            .newNullEntity(getEntityType());
     }
 
     default Class<E> getEntityType() {
