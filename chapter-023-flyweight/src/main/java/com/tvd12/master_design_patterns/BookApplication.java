@@ -1,6 +1,8 @@
 package com.tvd12.master_design_patterns;
 
 import com.tvd12.master_design_patterns.adapter.AdapterProvider;
+import com.tvd12.master_design_patterns.backup.BackupSchedulerManager;
+import com.tvd12.master_design_patterns.backup.DataBackupFactory;
 import com.tvd12.master_design_patterns.cache.CacheProvider;
 import com.tvd12.master_design_patterns.command.CommandProvider;
 import com.tvd12.master_design_patterns.decorator.DecoratorProvider;
@@ -49,6 +51,10 @@ public final class BookApplication {
     private final DecoratorProvider decoratorProvider;
     @Getter
     private final StorageProvider storageProvider;
+    @Getter
+    private final DataBackupFactory dataBackupFactory;
+    @Getter
+    private final BackupSchedulerManager dataSchedulerManager;
 
     private static final BookApplication INSTANCE = new BookApplication();
 
@@ -67,6 +73,10 @@ public final class BookApplication {
         validatorProvider = new ValidatorProvider();
         decoratorProvider = new DecoratorProvider();
         storageProvider = new StorageProvider();
+        dataBackupFactory = new DataBackupFactory();
+        dataSchedulerManager = new BackupSchedulerManager(
+            dataBackupFactory
+        );
     }
 
     public static BookApplication getInstance() {
