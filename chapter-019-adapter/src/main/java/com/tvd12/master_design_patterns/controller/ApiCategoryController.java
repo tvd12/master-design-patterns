@@ -55,7 +55,7 @@ public class ApiCategoryController {
             .addFirstHandle(() -> {
                 final long categoryId = bookApplication
                     .getAdapterProvider()
-                    .getAdapter(CategoryDataServiceToCategoryRepositoryAdapter.class)
+                    .getAdapterByName("categoryDataServiceToCategoryRepositoryAdapter")
                     .saveModel(new AddCategoryModel(request.getCategoryName()));
                 return new AddCategoryResponse(categoryId);
             })

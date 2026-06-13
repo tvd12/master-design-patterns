@@ -62,11 +62,11 @@ public final class BookApplication {
         serviceProvider = new ServiceProvider();
         mediatorProvider = new MediatorProvider();
         strategyProvide = new StrategyProvide();
-        adapterProvider = new AdapterProvider();
         cacheProvider = new CacheProvider();
         validatorProvider = new ValidatorProvider();
         decoratorProvider = new DecoratorProvider();
         storageProvider = new StorageProvider();
+        adapterProvider = new AdapterProvider();
     }
 
     public static BookApplication getInstance() {
