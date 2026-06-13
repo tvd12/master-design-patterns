@@ -9,11 +9,16 @@ public class DecoratorProvider {
 
     public DecoratorProvider() {
         decoratorByType = new HashMap<>();
-        decoratorByType.put(CategoryDecorator.class, new CategoryDecorator());
+        decoratorByType.put(CategoryDecorator.class, new CategoryIdNameDecorator());
     }
 
     @SuppressWarnings("unchecked")
     public <D> D getDecorator(Class<D> decoratorClass) {
-        return (D) decoratorByType.get(decoratorClass);
+        return (D) decoratorByType.computeIfAbsent(
+            decoratorClass,
+            k -> new CategoryDecorator(
+                new CategoryIdNameDecorator()
+            )
+        );
     }
 }

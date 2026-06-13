@@ -13,6 +13,7 @@ import com.tvd12.master_design_patterns.pool.ConnectionPool;
 import com.tvd12.master_design_patterns.repository.DatabaseContext;
 import com.tvd12.master_design_patterns.repository.impl.DatabaseContextImpl;
 import com.tvd12.master_design_patterns.service.ServiceProvider;
+import com.tvd12.master_design_patterns.storage.StorageProvider;
 import com.tvd12.master_design_patterns.strategy.StrategyProvide;
 import com.tvd12.master_design_patterns.validator.ValidatorProvider;
 import lombok.Getter;
@@ -43,6 +44,8 @@ public final class BookApplication {
     private final CacheProvider cacheProvider;
     @Getter
     private final ValidatorProvider validatorProvider;
+    @Getter
+    private final StorageProvider storageProvider;
 
     private static final BookApplication INSTANCE = new BookApplication();
 
@@ -59,6 +62,7 @@ public final class BookApplication {
         adapterProvider = new AdapterProvider();
         cacheProvider = new CacheProvider();
         validatorProvider = new ValidatorProvider();
+        storageProvider = new StorageProvider();
     }
 
     public static BookApplication getInstance() {
